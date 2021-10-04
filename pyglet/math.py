@@ -91,24 +91,29 @@ class Vec2(tuple):
             return self
         else:
             return self.__add__(other)
-
+    
+    @property
     def heading(self):
         return _math.atan2(self[1], self[0])
 
-    def set_heading(self, angle):
+    @heading.setter
+    def heading(self, angle):
         mag = self.__abs__()
         return Vec2(mag * _math.cos(angle), mag * _math.sin(angle))
 
-    def set_magnitude(self, value):
-        return self.normalize().scale(value)
-
+    @property
     def magnitude(self):
         return self.__abs__()
+
+    @magnitude.setter
+    def magnitude(self, value):
+        return self.normalize().scale(value)
 
     def limit(self, value):
         mag = self.__abs__()
         if mag > value:
-            return self.set_magnitude(value)
+            self.magnitude = value
+            return self.magnitude
         return self
             
     def lerp(self, other, alpha):
